@@ -88,7 +88,7 @@ function App() {
         errors={errors}
         setErrors={setErrors}
       />
-      <div className='mt-8 flex flex-row justify-self-end'>
+      <div className='mt-4 flex flex-row justify-self-end'>
         <button
           className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={OnSubmit}>

@@ -36,7 +36,7 @@ const EmailId = ({mainData, setMainData, errors, setErrors}) => {
     }
 
     return (
-        <div className='mt-8 md:flex flex-row'>
+        <div className='mt-2 md:flex flex-row'>
             <div className='md:w-2/5'><h1>Email Address</h1></div>
             <div className='m-2 w-full md:w-3/5'>
                 <div className='flex flex-col'>
