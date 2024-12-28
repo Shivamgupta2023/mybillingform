@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import HeaderSection from './components/HeaderSection';
 import PaymentDetails from './components/PaymentDetails';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EmailId from './components/EmailId';
 import AdditionalDetails from './components/AdditionalDetails';
 
@@ -36,6 +35,14 @@ function App() {
     Zip: ''
   })
 
+  useEffect(() => {
+    // Retrieve mainData from local storage when the component mounts
+    const storedData = localStorage.getItem('mainData');
+    if (storedData) {
+        setMainData(JSON.parse(storedData));
+    }
+}, [setMainData]);
+
   const OnSubmit = () => {
     const { cardNumber, cardHolderName, expiry, cvv, EmailId, Country, Address1, Address2, City, State, Zip } = mainData;
     if (!cardNumber || !cardHolderName || !expiry || !cvv || !EmailId || !Country || !Address1 || !City || !State || !Zip) {
@@ -52,7 +59,10 @@ function App() {
         State: State ? '' : 'Please enter state',
         Zip: Zip ? '' : 'Please enter zip'
       });
+      return;
     }
+    localStorage.setItem('mainData', JSON.stringify(mainData));
+    alert('Data saved successfully');
   }
 
   return (
