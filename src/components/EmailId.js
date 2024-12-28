@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const EmailId = ({mainData, setMainData}) => {
+const EmailId = ({mainData, setMainData, errors, setErrors}) => {
 
     const {EmailId} = mainData;
+
+    useEffect(() => {
+        setErrors({
+            ...errors,
+            ...((EmailId.length > 0 && validateEmail(EmailId)) && { EmailId: '' }),
+        });
+    }, [EmailId]);
 
     const validateEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -11,9 +18,17 @@ const EmailId = ({mainData, setMainData}) => {
 
     const handleEmailIdChange = (e) => {
         let value = e.target.value;
-        // if(!validateEmail(value)) {
-        //     return;
-        // }
+        if(!validateEmail(value) && value.length > 0) {
+            setErrors({
+                ...errors,
+                EmailId: 'Please enter a valid email id'
+            });
+        } else {
+            setErrors({
+                ...errors,
+                EmailId: ''
+            });
+        }
         setMainData({
             ...mainData,
             EmailId: value
@@ -21,9 +36,9 @@ const EmailId = ({mainData, setMainData}) => {
     }
 
     return (
-        <div className='mt-8 flex flex-row'>
-            <div className='w-2/5'><h1>Email Address</h1></div>
-            <div className='w-3/5 m-2'>
+        <div className='mt-8 md:flex flex-row'>
+            <div className='md:w-2/5'><h1>Email Address</h1></div>
+            <div className='m-2 w-full md:w-3/5'>
                 <div className='flex flex-col'>
                     <label htmlFor='cardNumber'>Email</label>
                     <input
@@ -34,6 +49,7 @@ const EmailId = ({mainData, setMainData}) => {
                         value={EmailId}
                         onChange={handleEmailIdChange}
                     />
+                    {errors.EmailId && <p className='text-red-500'>{errors.EmailId}</p>}
                 </div>
             </div>
         </div>
